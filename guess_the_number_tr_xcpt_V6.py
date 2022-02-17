@@ -68,7 +68,7 @@ print(int_num) # Print hint
 #Main program cycle
 while True:
     try:
-        user_inpt = usr_inp()
+        user_inpt = usr_inp()fffff
     except Exception:
         msg('exit')
         break
