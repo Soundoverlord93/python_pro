@@ -2,7 +2,7 @@ import random
 import pyfiglet
 from termcolor import colored
 import time
-
+import sys
 #Define custom exception class for main game logic exception
 class Win_exception(Exception):
     pass
@@ -29,13 +29,13 @@ def usr_inp():
     try:
         usr_inpt = input() # usr_inpt puted into try for KeyboardInterrupt catching
         if usr_inpt == 'exit':
-            raise Exception ('Exit')
+            sys.exit(0)
         usr_inpt = int(usr_inpt)
     except ValueError:
         msg('wrng')
         return None
     except KeyboardInterrupt:
-        raise Exception ('Exit')
+        sys.exit(0)
     else:
         if 0 <= usr_inpt <=10 :
             return usr_inpt
@@ -64,19 +64,14 @@ print(int_num) # Print hint
 
 #Main program cycle
 while True:
+    user_inpt = usr_inp()
     try:
-        user_inpt = usr_inp()
-    except Exception:
-        msg('exit')
+        game_cnd(user_inpt)
+    except Wrng_exception :
+        continue
+    except Win_exception:
+        time.sleep(5)
         break
-    else:
-        try:
-            game_cnd(user_inpt)
-        except Wrng_exception :
-            continue
-        except Win_exception:
-            time.sleep(5)
-            break
         
 
 
