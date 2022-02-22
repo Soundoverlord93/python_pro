@@ -4,28 +4,29 @@ from termcolor import colored
 import time
 import sys
 #Define custom exception class for main game logic exception
-class Win_exception(Exception):
-    pass
-class Wrng_exception(Exception):
+class UserNumError(Exception):
     pass
 
-#Define function for printing  interacrive messages
+dict_msg = {"exit":"Goodbye !!!","wrng":"Wrong value entered, please enter  number between 0 and 10 ","more":"Your number is more than need, enter  number again : ","less":"Your number is less than need, enter  number again : ","win":"Congrats, you are guessed the number  !!!!","Hello":"Hello Player , enter your number between   0  and  10  here  or  type ( \"exit\" or \"CTRL+C\" ) to stop game"}
+
 def msg(pnrt_val) :
+    """function for printing  interacrive messages"""
     if pnrt_val == 'exit' :
-        print(colored(pyfiglet.figlet_format("Goodbye !!!"), "green"))
+        print(colored(pyfiglet.figlet_format(dict_msg["exit"]), "green"))
     elif(pnrt_val == 'wrng'):
-        print(colored("Wrong value entered, please enter  number between 0 and 10 ","red"), sep = "\n")
+        print(colored(dict_msg["wrng"],"red"), sep = "\n")
     elif(pnrt_val == 'more'):
-        print(colored("Your number is more than need, enter  number again : ", "red"))
+        print(colored(dict_msg["more"], "red"))
     elif(pnrt_val == 'les'):
-        print(colored("Your number is less than need, enter  number again : ", "red"))
+        print(colored(dict_msg["less"], "red"))
     elif(pnrt_val == 'win'):
-        print(colored(pyfiglet.figlet_format(f"Congrats, you are guessed the number  !!!!",width = 180), "yellow"))
+        print(colored(pyfiglet.figlet_format(f'{dict_msg["win"]}',width = 180), "yellow"))
     else :
-        print(colored(pyfiglet.figlet_format("Hello Player , enter your number between   0  and  10  here  or  type ( \"exit\" or \"CTRL+C\" ) to stop game", width = 190), "green"))
+        print(colored(pyfiglet.figlet_format(dict_msg["Hello"], width = 190), "green"))
 
-#Define function for verifying user inputed data 
+
 def usr_inp():
+    """function for verifying user inputed data"""
     try:
         usr_inpt = input() # usr_inpt puted into try for KeyboardInterrupt catching
         if usr_inpt == 'exit':
@@ -43,46 +44,35 @@ def usr_inp():
             msg('wrng')
             return None
 int_num = random.randint(0, 10) # Generate random number
-#msg(0)# Print Hello message
-print(int_num) # Print hint
 
-#Define function for main game logic
 def game_cnd(usernum):
+    """ function for main game logic"""
     if usernum is None:
-        raise Wrng_exception ('Wrng')
+        raise UserNumError ('Wrng')
     elif usernum < int_num:
         msg('les')
     elif(usernum > int_num):
         msg('more')
     else:
         msg('win')
-        raise Win_exception ('Win')
+        time.sleep(5)
+        sys.exit(0)
 
 int_num = random.randint(0, 10) # Generate random number
 msg(0)# Print Hello message
-print(int_num) # Print hint
+#print(int_num) # Print hint
 
 #Main program cycle
 while True:
     user_inpt = usr_inp()
     try:
         game_cnd(user_inpt)
-    except Wrng_exception :
+    except UserNumError :
         continue
-    except Win_exception:
-        time.sleep(5)
-        break
-        
 
 
 """
-1)  Из usr_inp убрал цикл убралб также убрал искключения и передал None на выход функции
-
-2) Упростил условие вхождения в диапазон
-
-3) Но пришлось добавить два кастомних исключения в game_cnd() но можно и через функцию переделать...не знаю как лучше 
-
-Рад замечаниям, буду исправлять 
+Вроде все исправил только полностю функцию msg решил не заменять на словарь чтобы было удобно манипулировать выводом
 """
 
 
