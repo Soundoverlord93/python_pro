@@ -13,11 +13,8 @@ except FileNotFoundError:
     print(colored("File not found, please enter existing file name with file path", "red"))
 else:
     f_data = t_file.readlines()
-    #print(type(f_data[0]))
     for f_line in f_data:
         if args['pattern'] in f_line:
-            #print(type(f_data))
             f_line = f_line.replace(args['pattern'],colored(args['pattern'],"yellow"))
             print (f"{f_line}")
-            #print(args['pattern'])
 
