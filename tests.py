@@ -1,2 +1,2 @@
-s = 'z'
-print(int(s))
+tuple7 = tuple(("apple"))
+print(tuple7)
