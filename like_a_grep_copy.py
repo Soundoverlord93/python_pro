@@ -17,7 +17,6 @@ def line_parse(text):
     ptrn_math=[]
     for sngl_line in text:
         if args['pattern'] in sngl_line:
-            
              ptrn_math.append(sngl_line)
     print(ptrn_marker(ptrn_math))
     
